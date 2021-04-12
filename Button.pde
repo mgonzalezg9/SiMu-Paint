@@ -7,11 +7,11 @@ class Button {
   boolean clicked;
   float radius;
   
-  Button(PImage image, PVector location) {
+  Button(PImage image, PVector location, float size) {
     this.image = image;
     this.location = location;
     this.clicked = false;
-    this.radius = width/15;
+    this.radius = size;
   }
   
   void click() {
