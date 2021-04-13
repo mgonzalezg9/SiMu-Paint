@@ -1,55 +1,44 @@
-ArrayList<Button> btnList;
+ArrayList<Button> toolList, filterList;
 int selectedTool = 0;
 
+// Aux methods
+void drawTools() {
+  line(BUTTON_SIZE, 0, BUTTON_SIZE, height);
+  
+  for(Button btn : toolList) {
+    btn.display();
+  }
+}
+
+void drawFilters() {
+  line(width, BUTTON_SIZE, width - BUTTON_SIZE * NUM_FILTERS, BUTTON_SIZE);
+  line(width - BUTTON_SIZE * NUM_FILTERS, BUTTON_SIZE, width - BUTTON_SIZE * NUM_FILTERS, 0);
+  
+  for(Button btn : filterList) {
+    btn.display();
+  }
+}
+
+/*void drawCanvas() {
+  rectMode(CORNERS);
+  rect(BUTTON_SIZE + CANVAS_MARGIN, BUTTON_SIZE + CANVAS_MARGIN, width - CANVAS_MARGIN, height - CANVAS_MARGIN);
+}*/
+
+// Processing methods
 void setup() {
   size(720, 440);
   
-  btnList = new ArrayList<Button>();
-  float offset = 0;
-  
-  Button b = new Button(loadImage("./data/pencil.png"), new PVector(0, offset), height/NUM_TOOLS);
-  b.click();
-  offset += height/NUM_TOOLS;
-  btnList.add(b);
-  
-  b = new Button(loadImage("./data/line.png"), new PVector(0, offset), height/NUM_TOOLS);
-  offset += height/NUM_TOOLS;
-  btnList.add(b);
-  
-  b = new Button(loadImage("./data/rectangle.png"), new PVector(0, offset), height/NUM_TOOLS);
-  offset += height/NUM_TOOLS;
-  btnList.add(b);
-  
-  b = new Button(loadImage("./data/ellipse.png"), new PVector(0, offset), height/NUM_TOOLS);
-  offset += height/NUM_TOOLS;
-  btnList.add(b);
-  
-  b = new Button(loadImage("./data/color.png"), new PVector(0, offset), height/NUM_TOOLS);
-  offset += height/NUM_TOOLS;
-  btnList.add(b);
-  
-  b = new Button(loadImage("./data/paint_bucket.png"), new PVector(0, offset), height/NUM_TOOLS);
-  offset += height/NUM_TOOLS;
-  btnList.add(b);
-  
-  b = new Button(loadImage("./data/rubber.png"), new PVector(0, offset), height/NUM_TOOLS);
-  offset += height/NUM_TOOLS;
-  btnList.add(b);
-  
-  b = new Button(loadImage("./data/load.png"), new PVector(0, offset), height/NUM_TOOLS);
-  offset += height/NUM_TOOLS;
-  btnList.add(b);
-  
-  b = new Button(loadImage("./data/save.png"), new PVector(0, offset), height/NUM_TOOLS);
-  offset += height/NUM_TOOLS;
-  btnList.add(b);
+  BUTTON_SIZE = height/NUM_TOOLS;
+  toolList = createTools();
+  filterList = createFilters();
 }
 
 void mouseClicked() {
   int newTool = -1;
   
-  for (int i = 0; i < btnList.size(); i++) {
-    Button b = btnList.get(i);
+  // Tool listener
+  for (int i = 0; i < toolList.size(); i++) {
+    Button b = toolList.get(i);
     if (b.clicked()) {
       newTool = i;
       break;
@@ -57,16 +46,24 @@ void mouseClicked() {
   }
   
   if (newTool != -1 && newTool != selectedTool) {
-    btnList.get(selectedTool).unclick();
+    toolList.get(selectedTool).unclick();
     selectedTool = newTool;
   }
-}
-
-void drawTools() {
-  line(height/NUM_TOOLS, 0, height/NUM_TOOLS, height);
   
-  for(Button btn : btnList) {
-    btn.display();
+  // Filter listener
+  int filterNum = -1;
+  for (int i = 0; i < filterList.size(); i++) {
+    Button b = filterList.get(i);
+    if (b.clicked()) {
+      filterNum = i;
+      break;
+    }
+  }
+  
+  switch (filterNum) {
+    case NEGATIVE_FILTER:
+      negative();
+      break;
   }
 }
 
@@ -74,4 +71,6 @@ void draw() {
   background(255); // Reset
   
   drawTools();
+  drawFilters();
+  //drawCanvas();
 }

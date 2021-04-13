@@ -1,5 +1,6 @@
-final color BUTTON_COLOR = color(242, 242, 242);
-final color BUTTON_ACCENT_COLOR = color(255, 178, 100);
+private final color BUTTON_COLOR = color(242, 242, 242);
+private final color BUTTON_ACCENT_COLOR = color(255, 178, 100);
+public static float BUTTON_SIZE;
 
 class Button {
   PImage image;
