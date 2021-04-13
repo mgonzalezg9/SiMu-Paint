@@ -2,7 +2,7 @@ private final color BUTTON_COLOR = color(242, 242, 242);
 private final color BUTTON_ACCENT_COLOR = color(255, 178, 100);
 public static float BUTTON_SIZE;
 
-class Button {
+public class Button {
   PImage image;
   PVector location;
   boolean clicked;

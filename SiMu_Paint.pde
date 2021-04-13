@@ -1,4 +1,7 @@
+private final color BG_COLOR = color(252);
+
 ArrayList<Button> toolList, filterList;
+Canvas c;
 int selectedTool = 0;
 
 // Aux methods
@@ -31,6 +34,8 @@ void setup() {
   BUTTON_SIZE = height/NUM_TOOLS;
   toolList = createTools();
   filterList = createFilters();
+  
+  c = new Canvas();
 }
 
 void mouseClicked() {
@@ -68,9 +73,9 @@ void mouseClicked() {
 }
 
 void draw() {
-  background(255); // Reset
+  background(BG_COLOR); // Reset
   
   drawTools();
   drawFilters();
-  //drawCanvas();
+  c.display();
 }
