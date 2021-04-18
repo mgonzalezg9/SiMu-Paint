@@ -1,4 +1,5 @@
 private final color BG_COLOR = color(252);
+private float CANVAS_MARGIN;
 
 ArrayList<Button> toolList, filterList;
 Canvas c;
@@ -22,20 +23,17 @@ void drawFilters() {
   }
 }
 
-/*void drawCanvas() {
-  rectMode(CORNERS);
-  rect(BUTTON_SIZE + CANVAS_MARGIN, BUTTON_SIZE + CANVAS_MARGIN, width - CANVAS_MARGIN, height - CANVAS_MARGIN);
-}*/
-
 // Processing methods
 void setup() {
   size(720, 440);
   
   BUTTON_SIZE = height/NUM_TOOLS;
+  CANVAS_MARGIN = height/40;
+  
   toolList = createTools();
   filterList = createFilters();
   
-  c = new Canvas();
+  c = new Canvas(BUTTON_SIZE + CANVAS_MARGIN, BUTTON_SIZE + CANVAS_MARGIN, width - CANVAS_MARGIN, height - CANVAS_MARGIN);
 }
 
 void mouseClicked() {
@@ -65,15 +63,38 @@ void mouseClicked() {
     }
   }
   
-  switch (filterNum) {
-    case NEGATIVE_FILTER:
-      negative();
+  // Control buttons
+  switch (selectedTool) {
+    case SAVE_TOOL:
+      c.save();
       break;
   }
 }
 
+/* Performing actions */
+void mouseDragged() {
+  switch (selectedTool) {
+    case PENCIL_TOOL:
+      c.drawLine(pmouseX - BUTTON_SIZE - CANVAS_MARGIN, pmouseY - BUTTON_SIZE - CANVAS_MARGIN, mouseX - BUTTON_SIZE - CANVAS_MARGIN, mouseY - BUTTON_SIZE - CANVAS_MARGIN);
+      break;
+    case LINE_TOOL:
+      c.drawLine(pmouseX, pmouseY, mouseX, mouseY);
+      break;
+    case ERASER_TOOL:
+      c.erase(mouseX, mouseY);
+      break;
+  }
+}
+
+void mousePressed() {
+  
+}
+
 void draw() {
-  background(BG_COLOR); // Reset
+  // Reset
+  //fill(BG_COLOR);
+  //rect(0, 0, BUTTON_SIZE, height);
+  //rect(width, 0, width - BUTTON_SIZE * NUM_FILTERS, BUTTON_SIZE);
   
   drawTools();
   drawFilters();

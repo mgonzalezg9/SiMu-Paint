@@ -1,6 +1,11 @@
 public static final int NUM_TOOLS = 9;
 public static final int NUM_FILTERS = 3;
 
+public static final int PENCIL_TOOL = 0;
+public static final int LINE_TOOL = 1;
+public static final int ERASER_TOOL = 6;
+public static final int SAVE_TOOL = 8;
+
 public static final int NEGATIVE_FILTER = 0;
 
 public ArrayList<Button> createTools() {
@@ -53,7 +58,7 @@ public ArrayList<Button> createFilters() {
   
   float offset = BUTTON_SIZE;
   
-  Button b = new Button(loadImage("./data/pencil.png"), new PVector(width - offset, 0), BUTTON_SIZE);
+  Button b = new Button(loadImage("./data/negative.png"), new PVector(width - offset, 0), BUTTON_SIZE);
   offset += BUTTON_SIZE;
   filters.add(b);
   
