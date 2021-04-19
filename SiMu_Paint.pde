@@ -1,4 +1,4 @@
-private final color BG_COLOR = color(252);
+//private final color BG_COLOR = color(252);
 private float CANVAS_MARGIN;
 
 ArrayList<Button> toolList, filterList;
@@ -68,6 +68,10 @@ void mouseClicked() {
     case SAVE_TOOL:
       c.save();
       break;
+    case OPEN_TOOL:
+      c.open();
+      break;
+      
   }
 }
 
@@ -81,7 +85,7 @@ void mouseDragged() {
       c.drawLine(pmouseX, pmouseY, mouseX, mouseY);
       break;
     case ERASER_TOOL:
-      c.erase(mouseX, mouseY);
+      c.erase(mouseX - BUTTON_SIZE - CANVAS_MARGIN, mouseY - BUTTON_SIZE - CANVAS_MARGIN);
       break;
   }
 }
