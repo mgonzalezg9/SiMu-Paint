@@ -19,7 +19,8 @@ public class Canvas {
   
   public void drawLine(float x1, float y1, float x2, float y2) {
     pg.beginDraw();
-    pg.stroke(5);
+    pg.stroke(0);
+    pg.strokeWeight(width * selectedStroke / 100);
     pg.fill(DRAW_COLOR);
     pg.line(x1, y1, x2, y2);
     pg.endDraw();
@@ -29,7 +30,9 @@ public class Canvas {
     pg.beginDraw();
     pg.noStroke();
     pg.fill(CANVAS_COLOR);
-    pg.rect(x, y, LINE_STROKE, LINE_STROKE);
+    pg.rectMode(CENTER);
+    pg.rect(x, y, width/(50 / (selectedStroke + 1)), width/(50 / (selectedStroke + 1)));
+    pg.rectMode(CORNER);
     pg.endDraw();
   }
   
@@ -38,6 +41,7 @@ public class Canvas {
     fileChooser.setDialogTitle("Open a file");
     fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
     fileChooser.setFileFilter(new FileNameExtensionFilter("Image (.gif, .jpg, .tga, .png)", "jpg", "jpeg", "png", "JPG", "JPEG", "PNG", "GIF", "gif", "TGA", "tga"));
+    fileChooser.setAcceptAllFileFilterUsed(false);
 
     fileChooser.showDialog(new JFrame(), "Load");
     File selectedFile = fileChooser.getSelectedFile();
@@ -62,6 +66,7 @@ public class Canvas {
     FileNameExtensionFilter filter = new FileNameExtensionFilter("Portable Network Graphics", "png");
     fileChooser.addChoosableFileFilter(filter);
     fileChooser.setFileFilter(filter);
+    fileChooser.setAcceptAllFileFilterUsed(false);
 
     int option = fileChooser.showSaveDialog(new JFrame());
     if (option == JFileChooser.APPROVE_OPTION) {

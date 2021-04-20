@@ -9,8 +9,6 @@ public static final int SAVE_TOOL = 8;
 
 public static final int NEGATIVE_FILTER = 0;
 
-public static final int LINE_STROKE = 5;
-
 public ArrayList<Button> createTools() {
   ArrayList<Button> tools = new ArrayList<Button>();
   
@@ -56,14 +54,23 @@ public ArrayList<Button> createTools() {
   return tools;
 }
 
-public ArrayList<Button> createFilters() {
-  ArrayList<Button> filters = new ArrayList<Button>();
+public ArrayList<Button> createLineStrokes() {
+  ArrayList<Button> strokes = new ArrayList<Button>();
   
   float offset = BUTTON_SIZE;
   
-  Button b = new Button(loadImage("./data/negative.png"), new PVector(width - offset, 0), BUTTON_SIZE);
+  Button b = new Button(loadImage("./data/line_sm.png"), new PVector(width - offset, 0), BUTTON_SIZE);
+  b.click();
   offset += BUTTON_SIZE;
-  filters.add(b);
+  strokes.add(b);
   
-  return filters;
+  b = new Button(loadImage("./data/line_md.png"), new PVector(width - offset, 0), BUTTON_SIZE);
+  offset += BUTTON_SIZE;
+  strokes.add(b);
+  
+  b = new Button(loadImage("./data/line_bg.png"), new PVector(width - offset, 0), BUTTON_SIZE);
+  offset += BUTTON_SIZE;
+  strokes.add(b);
+  
+  return strokes;
 }

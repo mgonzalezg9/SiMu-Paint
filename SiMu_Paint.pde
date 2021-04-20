@@ -1,9 +1,10 @@
 //private final color BG_COLOR = color(252);
 private float CANVAS_MARGIN;
 
-ArrayList<Button> toolList, filterList;
+ArrayList<Button> toolList, lineStrokeList;
 Canvas c;
 int selectedTool = 0;
+int selectedStroke = 0;
 
 // Aux methods
 void drawTools() {
@@ -14,11 +15,11 @@ void drawTools() {
   }
 }
 
-void drawFilters() {
+void drawLineStroke() {
   line(width, BUTTON_SIZE, width - BUTTON_SIZE * NUM_FILTERS, BUTTON_SIZE);
   line(width - BUTTON_SIZE * NUM_FILTERS, BUTTON_SIZE, width - BUTTON_SIZE * NUM_FILTERS, 0);
   
-  for(Button btn : filterList) {
+  for(Button btn : lineStrokeList) {
     btn.display();
   }
 }
@@ -31,7 +32,7 @@ void setup() {
   CANVAS_MARGIN = height/40;
   
   toolList = createTools();
-  filterList = createFilters();
+  lineStrokeList = createLineStrokes();
   
   c = new Canvas(BUTTON_SIZE + CANVAS_MARGIN, BUTTON_SIZE + CANVAS_MARGIN, width - CANVAS_MARGIN, height - CANVAS_MARGIN);
 }
@@ -53,14 +54,20 @@ void mouseClicked() {
     selectedTool = newTool;
   }
   
-  // Filter listener
-  int filterNum = -1;
-  for (int i = 0; i < filterList.size(); i++) {
-    Button b = filterList.get(i);
+  // Line stroke listener
+  int strokeNum = -1;
+  
+  for (int i = 0; i < lineStrokeList.size(); i++) {
+    Button b = lineStrokeList.get(i);
     if (b.clicked()) {
-      filterNum = i;
+      strokeNum = i;
       break;
     }
+  }
+  
+  if (strokeNum != -1 && strokeNum != selectedStroke) {
+    lineStrokeList.get(selectedStroke).unclick();
+    selectedStroke = strokeNum;
   }
   
   // Control buttons
@@ -71,12 +78,21 @@ void mouseClicked() {
     case OPEN_TOOL:
       c.open();
       break;
-      
   }
+  
+  performAction();
 }
 
 /* Performing actions */
 void mouseDragged() {
+  performAction();
+}
+
+void mousePressed() {
+  
+}
+
+void performAction() {
   switch (selectedTool) {
     case PENCIL_TOOL:
       c.drawLine(pmouseX - BUTTON_SIZE - CANVAS_MARGIN, pmouseY - BUTTON_SIZE - CANVAS_MARGIN, mouseX - BUTTON_SIZE - CANVAS_MARGIN, mouseY - BUTTON_SIZE - CANVAS_MARGIN);
@@ -90,10 +106,6 @@ void mouseDragged() {
   }
 }
 
-void mousePressed() {
-  
-}
-
 void draw() {
   // Reset
   //fill(BG_COLOR);
@@ -101,6 +113,6 @@ void draw() {
   //rect(width, 0, width - BUTTON_SIZE * NUM_FILTERS, BUTTON_SIZE);
   
   drawTools();
-  drawFilters();
+  drawLineStroke();
   c.display();
 }
