@@ -80,7 +80,7 @@ void mouseClicked() {
       break;
   }
   
-  performAction();
+  //performAction();
 }
 
 /* Performing actions */
@@ -88,17 +88,34 @@ void mouseDragged() {
   performAction();
 }
 
+void mouseReleased() {
+  switch (selectedTool) {
+    case LINE_TOOL:
+    case RECT_TOOL:
+      c.endPreview();
+      break;
+  }
+}
+
 void mousePressed() {
-  
+  switch (selectedTool) {
+    case LINE_TOOL:
+    case RECT_TOOL:
+      c.setStartPoint(new PVector(mouseX - BUTTON_SIZE - CANVAS_MARGIN, mouseY - BUTTON_SIZE - CANVAS_MARGIN));
+      break;
+  }
 }
 
 void performAction() {
   switch (selectedTool) {
     case PENCIL_TOOL:
-      c.drawLine(pmouseX - BUTTON_SIZE - CANVAS_MARGIN, pmouseY - BUTTON_SIZE - CANVAS_MARGIN, mouseX - BUTTON_SIZE - CANVAS_MARGIN, mouseY - BUTTON_SIZE - CANVAS_MARGIN);
+      c.pencil(pmouseX - BUTTON_SIZE - CANVAS_MARGIN, pmouseY - BUTTON_SIZE - CANVAS_MARGIN, mouseX - BUTTON_SIZE - CANVAS_MARGIN, mouseY - BUTTON_SIZE - CANVAS_MARGIN);
       break;
     case LINE_TOOL:
-      c.drawLine(pmouseX, pmouseY, mouseX, mouseY);
+      c.line(mouseX  - BUTTON_SIZE - CANVAS_MARGIN, mouseY  - BUTTON_SIZE - CANVAS_MARGIN);
+      break;
+    case RECT_TOOL:
+      c.rectangle(mouseX  - BUTTON_SIZE - CANVAS_MARGIN, mouseY  - BUTTON_SIZE - CANVAS_MARGIN);
       break;
     case ERASER_TOOL:
       c.erase(mouseX - BUTTON_SIZE - CANVAS_MARGIN, mouseY - BUTTON_SIZE - CANVAS_MARGIN);
