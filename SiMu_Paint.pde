@@ -92,6 +92,7 @@ void mouseReleased() {
   switch (selectedTool) {
     case LINE_TOOL:
     case RECT_TOOL:
+    case ELLIPSE_TOOL:
       c.endPreview();
       break;
   }
@@ -101,6 +102,7 @@ void mousePressed() {
   switch (selectedTool) {
     case LINE_TOOL:
     case RECT_TOOL:
+    case ELLIPSE_TOOL:
       c.setStartPoint(new PVector(mouseX - BUTTON_SIZE - CANVAS_MARGIN, mouseY - BUTTON_SIZE - CANVAS_MARGIN));
       break;
   }
@@ -116,6 +118,9 @@ void performAction() {
       break;
     case RECT_TOOL:
       c.rectangle(mouseX  - BUTTON_SIZE - CANVAS_MARGIN, mouseY  - BUTTON_SIZE - CANVAS_MARGIN);
+      break;
+    case ELLIPSE_TOOL:
+      c.ellipse(mouseX  - BUTTON_SIZE - CANVAS_MARGIN, mouseY  - BUTTON_SIZE - CANVAS_MARGIN);
       break;
     case ERASER_TOOL:
       c.erase(mouseX - BUTTON_SIZE - CANVAS_MARGIN, mouseY - BUTTON_SIZE - CANVAS_MARGIN);

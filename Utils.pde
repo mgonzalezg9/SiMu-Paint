@@ -4,6 +4,7 @@ public static final int NUM_FILTERS = 3;
 public static final int PENCIL_TOOL = 0;
 public static final int LINE_TOOL = 1;
 public static final int RECT_TOOL = 2;
+public static final int ELLIPSE_TOOL = 3;
 public static final int ERASER_TOOL = 6;
 public static final int OPEN_TOOL = 7;
 public static final int SAVE_TOOL = 8;

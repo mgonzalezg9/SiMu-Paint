@@ -8,13 +8,13 @@ public class Canvas {
 
   private PVector leftCorner, startPoint;
   private int w, h;
-  private PGraphics graphics, preview;
+  private PGraphics base, preview;
   
   public Canvas(float x1, float y1, float x2, float y2) {
     this.leftCorner = new PVector(x1, y1);
     this.w = (int) (x2 - x1);
     this.h = (int) (y2 - y1);
-    this.graphics = createGraphics(w, h);
+    this.base = createGraphics(w, h);
     this.preview = createGraphics(w, h);
     this.preview.beginDraw();
     this.preview.endDraw();
@@ -25,12 +25,12 @@ public class Canvas {
   }
   
   public void pencil(float x1, float y1, float x2, float y2) {
-    graphics.beginDraw();
-    graphics.stroke(0);
-    graphics.strokeWeight(width * selectedStroke / 100);
-    graphics.fill(DRAW_COLOR);
-    graphics.line(x1, y1, x2, y2);
-    graphics.endDraw();
+    base.beginDraw();
+    base.stroke(0);
+    base.strokeWeight(width * selectedStroke / 100);
+    base.fill(DRAW_COLOR);
+    base.line(x1, y1, x2, y2);
+    base.endDraw();
   }
   
   public void line(float x, float y) {
@@ -54,13 +54,24 @@ public class Canvas {
     preview.endDraw();
   }
   
+  public void ellipse(float x, float y) {
+    preview.beginDraw();
+    preview.clear();
+    preview.stroke(0);
+    preview.strokeWeight(width * selectedStroke / 100);
+    preview.fill(CANVAS_COLOR);
+    preview.ellipseMode(CORNERS);
+    preview.ellipse(startPoint.x, startPoint.y, x, y);
+    preview.endDraw();
+  }
+  
   public void erase(float x, float y) {
-    graphics.beginDraw();
-    graphics.noStroke();
-    graphics.fill(CANVAS_COLOR);
-    graphics.rectMode(CENTER);
-    graphics.rect(x, y, width/(50 / (selectedStroke + 1)), width/(50 / (selectedStroke + 1)));
-    graphics.endDraw();
+    base.beginDraw();
+    base.noStroke();
+    base.fill(CANVAS_COLOR);
+    base.rectMode(CENTER);
+    base.rect(x, y, width/(50 / (selectedStroke + 1)), width/(50 / (selectedStroke + 1)));
+    base.endDraw();
   }
   
   public void open() {
@@ -78,9 +89,9 @@ public class Canvas {
         if (image != null) {
           image.resize(w, h);
 
-          graphics.beginDraw();
-          graphics.image(image, 0, 0);
-          graphics.endDraw();
+          base.beginDraw();
+          base.image(image, 0, 0);
+          base.endDraw();
         }
     }
   }
@@ -110,24 +121,25 @@ public class Canvas {
         aux.endDraw();
         aux.save(filename);*/
         
-        graphics.save(filename);
+        base.save(filename);
     }
   }
   
   public void display() {
     fill(CANVAS_COLOR);
     rect(leftCorner.x, leftCorner.y, w, h);
-    image(graphics, leftCorner.x, leftCorner.y);
+    image(base, leftCorner.x, leftCorner.y);
     image(preview, leftCorner.x, leftCorner.y);
   }
   
   public void endPreview() {
     // Saves the preview layer
-    graphics.beginDraw();
-    graphics.image(preview, 0, 0);
-    graphics.endDraw();
+    base.beginDraw();
+    base.image(preview, 0, 0);
+    base.endDraw();
     
     // Resets the preview layer
+    //preview.clear();
     preview = createGraphics(w, h);
     preview.beginDraw();
     preview.endDraw();
