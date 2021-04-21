@@ -2,9 +2,15 @@
 private float CANVAS_MARGIN;
 
 ArrayList<Button> toolList, lineStrokeList;
+
 Canvas c;
+ColorPicker cp;
+
 int selectedTool = 0;
 int selectedStroke = 0;
+color fillColor = color(255);
+color strokeColor = color(0);
+boolean colorPickerActive = false;
 
 // Aux methods
 void drawTools() {
@@ -24,6 +30,13 @@ void drawLineStroke() {
   }
 }
 
+void drawCurrentColors() {
+  fill(fillColor);
+  rect(BUTTON_SIZE + CANVAS_MARGIN, 0, BUTTON_SIZE, BUTTON_SIZE);
+  fill(strokeColor);
+  rect(2 * BUTTON_SIZE + CANVAS_MARGIN, 0, BUTTON_SIZE, BUTTON_SIZE);
+}
+
 // Processing methods
 void setup() {
   size(720, 440);
@@ -35,6 +48,7 @@ void setup() {
   lineStrokeList = createLineStrokes();
   
   c = new Canvas(BUTTON_SIZE + CANVAS_MARGIN, BUTTON_SIZE + CANVAS_MARGIN, width - CANVAS_MARGIN, height - CANVAS_MARGIN);
+  cp = new ColorPicker(BUTTON_SIZE + CANVAS_MARGIN, BUTTON_SIZE + CANVAS_MARGIN, width - CANVAS_MARGIN, height - CANVAS_MARGIN);
 }
 
 void mouseClicked() {
@@ -77,6 +91,10 @@ void mouseClicked() {
       break;
     case OPEN_TOOL:
       c.open();
+      break;
+    case COLOR_TOOL:
+      cp.display();
+      colorPickerActive = !colorPickerActive;
       break;
   }
   
@@ -136,5 +154,11 @@ void draw() {
   
   drawTools();
   drawLineStroke();
-  c.display();
+  drawCurrentColors();
+  
+  if (colorPickerActive) {
+    cp.display();
+  } else {
+    c.display();
+  }
 }

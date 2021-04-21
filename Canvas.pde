@@ -4,7 +4,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Canvas {
   private final color CANVAS_COLOR = color(255);
-  private final color DRAW_COLOR = color(0);
 
   private PVector leftCorner, startPoint;
   private int w, h;
@@ -28,7 +27,7 @@ public class Canvas {
     base.beginDraw();
     base.stroke(0);
     base.strokeWeight(width * selectedStroke / 100);
-    base.fill(DRAW_COLOR);
+    base.fill(fillColor);
     base.line(x1, y1, x2, y2);
     base.endDraw();
   }
@@ -38,7 +37,7 @@ public class Canvas {
     preview.clear();
     preview.stroke(0);
     preview.strokeWeight(width * selectedStroke / 100);
-    preview.fill(DRAW_COLOR);
+    preview.fill(fillColor);
     preview.line(startPoint.x, startPoint.y, x, y);
     preview.endDraw();
   }
