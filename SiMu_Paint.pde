@@ -1,3 +1,6 @@
+import javax.swing.JColorChooser;
+import java.awt.Color;
+
 //private final color BG_COLOR = color(252);
 private float CANVAS_MARGIN;
 
@@ -92,9 +95,27 @@ void mouseClicked() {
     case OPEN_TOOL:
       c.open();
       break;
-    case COLOR_TOOL:
-      cp.display();
-      colorPickerActive = !colorPickerActive;
+    case SROKE_TOOL:
+      Color stroke = JColorChooser.showDialog(null, "Choose a stroke color", Color.BLACK);
+  
+      if (stroke != null) {
+        strokeColor = color(stroke.getRed(), stroke.getGreen(), stroke.getBlue());
+      }
+      
+      toolList.get(selectedTool).unclick();
+      selectedTool = 0;
+      toolList.get(selectedTool).click();
+      break;
+    case FILL_TOOL:
+      Color fill = JColorChooser.showDialog(null, "Choose a fill color", Color.WHITE);
+  
+      if (fill != null) {
+        fillColor = color(fill.getRed(), fill.getGreen(), fill.getBlue());
+      }
+      
+      toolList.get(selectedTool).unclick();
+      selectedTool = 0;
+      toolList.get(selectedTool).click();
       break;
   }
   
