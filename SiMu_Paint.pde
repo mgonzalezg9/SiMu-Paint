@@ -4,13 +4,13 @@ import java.awt.Color;
 //private final color BG_COLOR = color(252);
 private float CANVAS_MARGIN;
 
-ArrayList<Button> toolList, lineStrokeList;
+ArrayList<Button> toolList, lineStrokeList, filterList;
 
 Canvas c;
-ColorPicker cp;
 
 int selectedTool = 0;
 int selectedStroke = 0;
+int selectedFilter = 0;
 color fillColor = color(255);
 color strokeColor = color(0);
 boolean colorPickerActive = false;
@@ -25,10 +25,20 @@ void drawTools() {
 }
 
 void drawLineStroke() {
-  line(width, BUTTON_SIZE, width - BUTTON_SIZE * NUM_FILTERS, BUTTON_SIZE);
-  line(width - BUTTON_SIZE * NUM_FILTERS, BUTTON_SIZE, width - BUTTON_SIZE * NUM_FILTERS, 0);
+  line(width, BUTTON_SIZE, width - BUTTON_SIZE * NUM_STROKES, BUTTON_SIZE);
+  line(width - BUTTON_SIZE * NUM_STROKES, BUTTON_SIZE, width - BUTTON_SIZE * NUM_STROKES, 0);
   
   for(Button btn : lineStrokeList) {
+    btn.display();
+  }
+}
+
+void drawFilters() {
+  float init = width - BUTTON_SIZE * NUM_FILTERS - CANVAS_MARGIN;
+  line(init, BUTTON_SIZE, init - BUTTON_SIZE * NUM_FILTERS, BUTTON_SIZE);
+  line(init - BUTTON_SIZE * NUM_FILTERS, BUTTON_SIZE, init - BUTTON_SIZE * NUM_FILTERS, 0);
+  
+  for(Button btn : filterList) {
     btn.display();
   }
 }
@@ -49,9 +59,9 @@ void setup() {
   
   toolList = createTools();
   lineStrokeList = createLineStrokes();
+  filterList = createFilters();
   
   c = new Canvas(BUTTON_SIZE + CANVAS_MARGIN, BUTTON_SIZE + CANVAS_MARGIN, width - CANVAS_MARGIN, height - CANVAS_MARGIN);
-  cp = new ColorPicker(BUTTON_SIZE + CANVAS_MARGIN, BUTTON_SIZE + CANVAS_MARGIN, width - CANVAS_MARGIN, height - CANVAS_MARGIN);
 }
 
 void mouseClicked() {
@@ -87,13 +97,34 @@ void mouseClicked() {
     selectedStroke = strokeNum;
   }
   
+  // Filter listener
+  for (int i = 0; i < filterList.size(); i++) {
+    Button b = filterList.get(i);
+    if (b.clicked()) {
+      selectedFilter = i;
+      c.applyFilter(i);
+      //b.unclick();
+      break;
+    }
+  }  
+
   // Control buttons
   switch (selectedTool) {
     case SAVE_TOOL:
       c.save();
+      
+      toolList.get(selectedTool).unclick();
+      selectedTool = 0;
+      toolList.get(selectedTool).click();
+      
       break;
     case OPEN_TOOL:
       c.open();
+      
+      toolList.get(selectedTool).unclick();
+      selectedTool = 0;
+      toolList.get(selectedTool).click();
+      
       break;
     case SROKE_TOOL:
       Color stroke = JColorChooser.showDialog(null, "Choose a stroke color", Color.BLACK);
@@ -175,11 +206,9 @@ void draw() {
   
   drawTools();
   drawLineStroke();
+  drawFilters();
   drawCurrentColors();
   
-  if (colorPickerActive) {
-    cp.display();
-  } else {
-    c.display();
-  }
+  c.display();
+  
 }

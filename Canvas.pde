@@ -85,10 +85,13 @@ public class Canvas {
         PImage image = loadImage(selectedFile.getAbsolutePath());
         
         if (image != null) {
-          image.resize(w, h);
+          float factor = h / image.height;
+          image.resize((int) (image.width * factor), h);
 
           base.beginDraw();
-          base.image(image, 0, 0);
+          base.clear();
+          base.imageMode(CENTER);
+          base.image(image, w/2, h/2);
           base.endDraw();
         }
     }
@@ -123,13 +126,6 @@ public class Canvas {
     }
   }
   
-  public void display() {
-    fill(CANVAS_COLOR);
-    rect(leftCorner.x, leftCorner.y, w, h);
-    image(base, leftCorner.x, leftCorner.y);
-    image(preview, leftCorner.x, leftCorner.y);
-  }
-  
   public void endPreview() {
     // Saves the preview layer
     base.beginDraw();
@@ -141,5 +137,26 @@ public class Canvas {
     preview = createGraphics(w, h);
     preview.beginDraw();
     preview.endDraw();
+  }
+  
+  // Filters
+  public void applyFilter(int filter) {
+    base.beginDraw();
+    switch (filter) {
+      case NEGATIVE_FILTER:
+        base.filter(INVERT);
+        break;
+      case BLUR_FILTER:
+        base.filter(BLUR);
+        break;
+    }
+    base.endDraw();
+  }
+  
+  public void display() {
+    fill(CANVAS_COLOR);
+    rect(leftCorner.x, leftCorner.y, w, h);
+    image(base, leftCorner.x, leftCorner.y);
+    image(preview, leftCorner.x, leftCorner.y);
   }
 }

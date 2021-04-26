@@ -1,4 +1,5 @@
 public static final int NUM_TOOLS = 9;
+public static final int NUM_STROKES = 3;
 public static final int NUM_FILTERS = 3;
 
 public static final int PENCIL_TOOL = 0;
@@ -12,6 +13,7 @@ public static final int OPEN_TOOL = 7;
 public static final int SAVE_TOOL = 8;
 
 public static final int NEGATIVE_FILTER = 0;
+public static final int BLUR_FILTER = 1;
 
 public ArrayList<Button> createTools() {
   ArrayList<Button> tools = new ArrayList<Button>();
@@ -77,4 +79,20 @@ public ArrayList<Button> createLineStrokes() {
   strokes.add(b);
   
   return strokes;
+}
+
+public ArrayList<Button> createFilters() {
+  ArrayList<Button> filters = new ArrayList<Button>();
+  
+  float offset = (NUM_STROKES + 1) * BUTTON_SIZE + CANVAS_MARGIN;
+  
+  Button b = new Button(loadImage("./data/negative.jpg"), new PVector(width - offset, 0), BUTTON_SIZE);
+  offset += BUTTON_SIZE;
+  filters.add(b);
+  
+  b = new Button(loadImage("./data/blur.png"), new PVector(width - offset, 0), BUTTON_SIZE);
+  offset += BUTTON_SIZE;
+  filters.add(b);
+  
+  return filters;
 }
