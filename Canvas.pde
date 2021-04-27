@@ -13,7 +13,12 @@ public class Canvas {
     this.leftCorner = new PVector(x1, y1);
     this.w = (int) (x2 - x1);
     this.h = (int) (y2 - y1);
+    
     this.base = createGraphics(w, h);
+    this.base.beginDraw();
+    this.base.background(CANVAS_COLOR);
+    this.base.endDraw();
+    
     this.preview = createGraphics(w, h);
     this.preview.beginDraw();
     this.preview.endDraw();
@@ -92,6 +97,7 @@ public class Canvas {
           base.clear();
           base.imageMode(CENTER);
           base.image(image, w/2, h/2);
+          base.imageMode(CORNER);
           base.endDraw();
         }
     }
@@ -118,7 +124,7 @@ public class Canvas {
         /*PGraphics aux = createGraphics(w, h);
         aux.beginDraw();
         aux.background(255);
-        aux.image(graphics, 0, 0);
+        aux.image(base, 0, 0);
         aux.endDraw();
         aux.save(filename);*/
         
@@ -149,13 +155,19 @@ public class Canvas {
       case BLUR_FILTER:
         base.filter(BLUR);
         break;
+      case ERODE_FILTER:
+        base.filter(ERODE);
+        break;
+      case DILATE_FILTER:
+        base.filter(DILATE);
+        break;
     }
     base.endDraw();
   }
   
   public void display() {
     fill(CANVAS_COLOR);
-    rect(leftCorner.x, leftCorner.y, w, h);
+    //rect(leftCorner.x, leftCorner.y, w, h);
     image(base, leftCorner.x, leftCorner.y);
     image(preview, leftCorner.x, leftCorner.y);
   }

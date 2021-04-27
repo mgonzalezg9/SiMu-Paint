@@ -14,6 +14,8 @@ public static final int SAVE_TOOL = 8;
 
 public static final int NEGATIVE_FILTER = 0;
 public static final int BLUR_FILTER = 1;
+public static final int ERODE_FILTER = 2;
+public static final int DILATE_FILTER = 3;
 
 public ArrayList<Button> createTools() {
   ArrayList<Button> tools = new ArrayList<Button>();
@@ -86,11 +88,19 @@ public ArrayList<Button> createFilters() {
   
   float offset = (NUM_STROKES + 1) * BUTTON_SIZE + CANVAS_MARGIN;
   
-  Button b = new Button(loadImage("./data/negative.jpg"), new PVector(width - offset, 0), BUTTON_SIZE);
+  Button b = new Button(loadImage("./data/negative.png"), new PVector(width - offset, 0), BUTTON_SIZE);
   offset += BUTTON_SIZE;
   filters.add(b);
   
   b = new Button(loadImage("./data/blur.png"), new PVector(width - offset, 0), BUTTON_SIZE);
+  offset += BUTTON_SIZE;
+  filters.add(b);
+  
+  b = new Button(loadImage("./data/erode.png"), new PVector(width - offset, 0), BUTTON_SIZE);
+  offset += BUTTON_SIZE;
+  filters.add(b);
+  
+  b = new Button(loadImage("./data/dilate.png"), new PVector(width - offset, 0), BUTTON_SIZE);
   offset += BUTTON_SIZE;
   filters.add(b);
   

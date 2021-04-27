@@ -103,10 +103,11 @@ void mouseClicked() {
     if (b.clicked()) {
       selectedFilter = i;
       c.applyFilter(i);
-      //b.unclick();
+      b.unclick();
       break;
     }
-  }  
+  }
+  
 
   // Control buttons
   switch (selectedTool) {
