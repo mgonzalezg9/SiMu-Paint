@@ -31,7 +31,7 @@ public class Canvas {
   public void pencil(float x1, float y1, float x2, float y2) {
     base.beginDraw();
     base.stroke(strokeColor);
-    base.strokeWeight(width * selectedStroke / 100);
+    base.strokeWeight(width * currentStroke / 100);
     base.line(x1, y1, x2, y2);
     base.endDraw();
   }
@@ -40,7 +40,7 @@ public class Canvas {
     preview.beginDraw();
     preview.clear();
     preview.stroke(strokeColor);
-    preview.strokeWeight(width * selectedStroke / 100);
+    preview.strokeWeight(width * currentStroke / 100);
     preview.fill(fillColor);
     preview.line(startPoint.x, startPoint.y, x, y);
     preview.endDraw();
@@ -50,7 +50,7 @@ public class Canvas {
     preview.beginDraw();
     preview.clear();
     preview.stroke(strokeColor);
-    preview.strokeWeight(width * selectedStroke / 100);
+    preview.strokeWeight(width * currentStroke / 100);
     preview.fill(fillColor);
     preview.rectMode(CORNERS);
     preview.rect(startPoint.x, startPoint.y, x, y);
@@ -61,7 +61,7 @@ public class Canvas {
     preview.beginDraw();
     preview.clear();
     preview.stroke(strokeColor);
-    preview.strokeWeight(width * selectedStroke / 100);
+    preview.strokeWeight(width * currentStroke / 100);
     preview.fill(fillColor);
     preview.ellipseMode(CORNERS);
     preview.ellipse(startPoint.x, startPoint.y, x, y);
@@ -73,7 +73,7 @@ public class Canvas {
     base.noStroke();
     base.fill(CANVAS_COLOR);
     base.rectMode(CENTER);
-    base.rect(x, y, width/(50 / (selectedStroke + 1)), width/(50 / (selectedStroke + 1)));
+    base.rect(x, y, width/(50 / (currentStroke + 1)), width/(50 / (currentStroke + 1)));
     base.endDraw();
   }
   

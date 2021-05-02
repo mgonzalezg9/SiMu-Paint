@@ -1,5 +1,5 @@
 public static final int NUM_TOOLS = 9;
-public static final int NUM_STROKES = 3;
+public static final int NUM_STROKES = 2;
 public static final int NUM_FILTERS = 3;
 
 public static final int PENCIL_TOOL = 0;
@@ -16,6 +16,12 @@ public static final int NEGATIVE_FILTER = 0;
 public static final int BLUR_FILTER = 1;
 public static final int ERODE_FILTER = 2;
 public static final int DILATE_FILTER = 3;
+
+public static final int LESS_STROKE = 0;
+public static final int MORE_STROKE = 1;
+
+public static final int MIN_STROKE = 0;
+public static final int MAX_STROKE = 100;
 
 public ArrayList<Button> createTools() {
   ArrayList<Button> tools = new ArrayList<Button>();
@@ -68,15 +74,10 @@ public ArrayList<Button> createLineStrokes() {
   float offset = BUTTON_SIZE;
   
   Button b = new Button(loadImage("./data/line_sm.png"), new PVector(width - offset, 0), BUTTON_SIZE);
-  b.click();
   offset += BUTTON_SIZE;
   strokes.add(b);
   
   b = new Button(loadImage("./data/line_md.png"), new PVector(width - offset, 0), BUTTON_SIZE);
-  offset += BUTTON_SIZE;
-  strokes.add(b);
-  
-  b = new Button(loadImage("./data/line_bg.png"), new PVector(width - offset, 0), BUTTON_SIZE);
   offset += BUTTON_SIZE;
   strokes.add(b);
   

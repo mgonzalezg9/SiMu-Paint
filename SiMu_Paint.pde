@@ -3,16 +3,17 @@ import java.awt.Color;
 
 //private final color BG_COLOR = color(252);
 private float CANVAS_MARGIN;
+private static final int STROKE_AUGMENT = 1;
 
 ArrayList<Button> toolList, lineStrokeList, filterList;
 
 Canvas c;
 
 int selectedTool = 0;
-int selectedStroke = 0;
 int selectedFilter = 0;
 color fillColor = color(255);
 color strokeColor = color(0);
+int currentStroke = MIN_STROKE;
 boolean colorPickerActive = false;
 
 // Aux methods
@@ -82,19 +83,25 @@ void mouseClicked() {
   }
   
   // Line stroke listener
-  int strokeNum = -1;
-  
   for (int i = 0; i < lineStrokeList.size(); i++) {
     Button b = lineStrokeList.get(i);
     if (b.clicked()) {
-      strokeNum = i;
+      b.unclick();
+      
+      // Setting the appropiate canvas stroke
+      if (i == MORE_STROKE) { 
+        currentStroke += STROKE_AUGMENT;
+      } else {
+        currentStroke -= STROKE_AUGMENT;
+      }
+      
+      if (currentStroke < MIN_STROKE) {
+        currentStroke = MIN_STROKE; 
+      } else if (currentStroke > MAX_STROKE) {
+        currentStroke = MAX_STROKE;
+      }
       break;
     }
-  }
-  
-  if (strokeNum != -1 && strokeNum != selectedStroke) {
-    lineStrokeList.get(selectedStroke).unclick();
-    selectedStroke = strokeNum;
   }
   
   // Filter listener
